@@ -121,7 +121,6 @@ public class CustomLoginModule implements LoginModule {
                 if (rs.next()) {
                     usuario = new Usuario();
                     usuario.setNome(rs.getString("nome"));
-                    usuario.setDocumento(rs.getString("documento"));
                     usuario.setEmail(rs.getString("email"));
                     usuario.setSenha(rs.getString("senha"));
                     usuario.setTipoUsuario(TipoUsuario.valueOf(rs.getString("tipo_usuario")));

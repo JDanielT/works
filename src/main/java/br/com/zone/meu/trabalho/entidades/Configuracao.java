@@ -41,7 +41,7 @@ public class Configuracao implements BaseEntity {
     @Column(name = "porta", length = 10)
     private String porta;
     
-    @Column(name = "url", length = 10)
+    @Column(name = "url")
     private String urlSistema;
     
     @Override

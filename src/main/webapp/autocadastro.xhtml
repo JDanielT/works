@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{autocadastroBean.preCadastro()}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+
+            <ui:define name="titulo">Cadastro</ui:define>
+
+            <ui:define name="conteudo">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <h:form class="form-horizontal" 
+                                    role="form"
+                                    prependId="false" >
+
+                                <fieldset>
+
+                                    <legend>Novo usuário</legend>
+
+                                    <h:messages showDetail="true"
+                                                infoClass="alert alert-info"
+                                                warnClass="alert alert-warning"
+                                                errorClass="alert alert-danger" />
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="nome">Nome</label>
+                                        <div class="col-sm-6">
+                                            <h:inputText id="nome"
+                                                         p:type="text" 
+                                                         p:placeholder="seu nome" 
+                                                         class="form-control"
+                                                         value="#{autocadastroBean.usuario.nome}"
+                                                         required="true" 
+                                                         requiredMessage="O campo nome é obrigatório" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label" for="sexo">Sexo</label>
+                                        <div class="col-sm-3">
+                                            <h:selectOneMenu id="sexo"
+                                                             class="form-control"
+                                                             value="#{autocadastroBean.usuario.sexo}" >
+                                                <f:selectItems value="#{autocadastroBean.sexos}" />
+                                            </h:selectOneMenu>                                                
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="nascimento">Nascimento</label>
+                                        <div class="col-sm-4">
+                                            <h:inputText id="nascimento"
+                                                         p:type="text" 
+                                                         p:placeholder="nascimento (não obrigatório)"
+                                                         class="form-control data"
+                                                         value="#{autocadastroBean.usuario.nascimento}" >
+
+                                                <f:converter converterId="localDateFacesConverter" />
+
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="uf">UF</label>
+                                        <div class="col-sm-3">
+                                            <h:selectOneMenu id="uf"
+                                                             class="form-control"
+                                                             value="#{autocadastroBean.usuario.municipio.estado}" 
+                                                             required="true" 
+                                                             requiredMessage="O campo estado é obrigatório" >
+
+                                                <f:ajax render="cidade" execute="@this" />
+
+                                                <f:converter converterId="simpleEntityFacesConverter" />
+
+                                                <f:selectItem itemLabel="Selecione" />
+                                                <f:selectItems value="#{autocadastroBean.estados}" />
+
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                        <label class="col-sm-1 control-label" for="cidade">Cidade</label>
+                                        <div class="col-sm-6">
+                                            <h:selectOneMenu id="cidade"
+                                                             class="form-control"
+                                                             value="#{autocadastroBean.usuario.municipio}"
+                                                             required="true" 
+                                                             requiredMessage="O campo cidade é obrigatório">
+
+                                                <f:converter converterId="simpleEntityFacesConverter" />
+
+                                                <f:selectItem itemLabel="Selecione" />
+                                                <f:selectItems value="#{autocadastroBean.municipios}" />
+
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="email">E-mail</label>
+                                        <div class="col-sm-5">
+                                            <h:inputText id="email"
+                                                         p:type="email" 
+                                                         p:placeholder="seu e-mail" 
+                                                         class="form-control"
+                                                         value="#{autocadastroBean.usuario.email}" />
+                                        </div>
+
+                                        <label class="col-sm-1 control-label" for="textinput">Senha</label>
+                                        <div class="col-sm-4">
+                                            <h:inputSecret id="senha"
+                                                           p:type="password" 
+                                                           p:placeholder="sua senha" 
+                                                           class="form-control"
+                                                           value="#{autocadastroBean.usuario.senha}" />
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <div class="pull-right">
+                                                <a href="home.xhtml" class="btn btn-default" >voltar</a>
+                                                <span style="width: 1px" />
+                                                <h:commandButton type="submit" 
+                                                                 class="btn btn-primary"
+                                                                 value="enviar"
+                                                                 action="#{autocadastroBean.salvar()}" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                            </h:form>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <!-- Side Widget Well -->
+                            <div class="well">
+                                <h4>Ei, psiu!</h4>
+                                <p>Não se preocupe, só exibiremos seus dados pessoais nas postagens se você permitir isso</p>
+                            </div>
+
+                            <div class="well">
+                                <h4>Já tem cadastro?</h4>
+                                <p>Se você já tem um cadastro faça o seu login <a href="#">aqui</a></p>
+                            </div>
+
+                            <div class="well">
+                                <h4>É responsável por alguma empresa?</h4>
+                                <p>Entre em contato conosco através do formulário disponível <a href="#">aqui</a></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

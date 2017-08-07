@@ -12,4 +12,8 @@ public class TokenDAO extends DAOGenerico<Token> {
         super(Token.class);
     }
     
+    public Token buscarTokenPorHash(String hash) {
+        return (Token) buscarUmResultado(Token.BUSCAR_TOKEN_POR_HASH, hash);
+    }
+    
 }

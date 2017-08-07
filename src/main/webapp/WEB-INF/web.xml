@@ -4,6 +4,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    
+    <welcome-file-list>
+        <welcome-file>home.xhtml</welcome-file>
+    </welcome-file-list>
+    
     <session-config>
         <session-timeout>
             30
@@ -31,5 +36,48 @@
         <resource-env-ref-name>BeanManager</resource-env-ref-name>
         <resource-env-ref-type>javax.enterprise.inject.spi.BeanManager</resource-env-ref-type>
     </resource-env-ref>
+    
+    <!-- SEGURANÇA -->
+
+    <security-role>
+        <role-name>CONVENCIONAL</role-name>
+        <role-name>ADMINISTRADOR</role-name>
+    </security-role>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <form-login-config>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml?fail-login=true</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>CONVENCIONAL</web-resource-name>
+            <url-pattern>/pages/postagens/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CONVENCIONAL</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ADMINISTRADOR</web-resource-name>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMINISTRADOR</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>FREE_PAGES</web-resource-name>
+            <url-pattern>/login.xhtml</url-pattern>
+            <url-pattern>/home.xhtml</url-pattern>
+            <url-pattern>/autocadastro.xhtml</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
     
 </web-app>

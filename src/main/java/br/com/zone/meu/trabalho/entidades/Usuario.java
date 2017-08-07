@@ -1,6 +1,7 @@
 package br.com.zone.meu.trabalho.entidades;
 
 import br.com.zone.meu.trabalho.conversores.LocalDatePersistenceConverter;
+import br.com.zone.meu.trabalho.util.HashUtil;
 import java.time.LocalDate;
 import org.hibernate.validator.constraints.Email;
 
@@ -20,9 +21,7 @@ import java.util.Objects;
     @NamedQuery(name = Usuario.BUSCAR_USUARIO_POR_EMAIL_SENHA,
             query = "SELECT u FROM Usuario u WHERE u.email = ?1 AND u.senha = ?2"),
     @NamedQuery(name = Usuario.BUSCAR_USUARIO_POR_EMAIL,
-            query = "SELECT u FROM Usuario u WHERE u.email = ?1"),
-    @NamedQuery(name = Usuario.BUSCAR_USUARIO_POR_EMAIL_DOCUMENTO,
-            query = "SELECT u FROM Usuario u WHERE u.email = ?1 AND u.documento = ?2")
+            query = "SELECT u FROM Usuario u WHERE u.email = ?1")
 })
 public class Usuario implements BaseEntity {
 
@@ -39,9 +38,6 @@ public class Usuario implements BaseEntity {
     @Column(length = 60)
     @Size(min = 3, max = 60)
     private String nome;
-
-    @Column(length = 18, unique = true)
-    private String documento;
 
     @Column(length = 15) 
     private String telefone;
@@ -100,14 +96,6 @@ public class Usuario implements BaseEntity {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
     }
 
     public String getTelefone() {
@@ -187,7 +175,7 @@ public class Usuario implements BaseEntity {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        this.senha = HashUtil.hash(senha);
     }
 
     public TipoUsuario getTipoUsuario() {

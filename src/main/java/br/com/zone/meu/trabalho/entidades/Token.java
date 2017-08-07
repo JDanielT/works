@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -16,7 +18,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tokens")
+@NamedQueries({
+    @NamedQuery(name = Token.BUSCAR_TOKEN_POR_HASH,
+            query = "SELECT t FROM Token t WHERE t.token = ?1")
+})
 public class Token implements BaseEntity {
+
+    public static final String BUSCAR_TOKEN_POR_HASH = "Token.buscarTokenPorHash";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,10 +15,10 @@ public class AuthConnectionFactory {
     private static AuthConnectionFactory connectionFactory;
     private final ComboPooledDataSource cpds;
     
-    public static final String DRIVER = "DRIVER";
-    public static final String USUARIO = "USER";
-    public static final String URL = "URL";
-    public static final String SENHA = "SENHA";
+    public static final String DRIVER = "org.postgresql.Driver";
+    public static final String USUARIO = "postgres";
+    public static final String URL = "jdbc:postgresql://localhost:5432/meu-trabalho";
+    public static final String SENHA = "123456";
     
     private AuthConnectionFactory() throws IOException, SQLException, PropertyVetoException {
         

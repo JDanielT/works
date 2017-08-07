@@ -45,11 +45,13 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         em.remove(entityToBeRemoved);
     }
 
+    @Transacional
     public T buscarPorId(Object id) {
         T resultado = em.find(entityClass, id);
         return resultado;
     }
     
+    @Transacional
     @SuppressWarnings("unchecked")
     protected Serializable buscarUmResultado(String namedQuery, Object... params) {
         Serializable result = null;
@@ -65,6 +67,7 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         return result;
     }
 
+    @Transacional
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<T> listarTodos() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -76,6 +79,7 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         return resultado;
     }
 
+    @Transacional
     protected List<T> listar(String namedQuery, Object... params) {
         Query q = em.createNamedQuery(namedQuery);
         for (int i = 0; i < params.length; i++) {

@@ -36,6 +36,7 @@ public class Postagem implements BaseEntity {
     private String titulo;
     
     @NotEmpty
+    @Column(columnDefinition = "TEXT")
     private String texto;
     
     @ManyToOne
