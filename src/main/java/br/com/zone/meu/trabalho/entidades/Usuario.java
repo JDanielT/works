@@ -85,8 +85,6 @@ public class Usuario implements BaseEntity {
 
     private boolean ativo;
 
-    
-    
     @Override
     public Long getId() {
         return id;
