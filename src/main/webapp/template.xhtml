@@ -20,6 +20,8 @@
         <!-- Custom CSS -->
         <h:outputStylesheet library="css" name="blog-home.css" />
 
+        <h:outputStylesheet library="css" name="jquery-ui.css" />
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -33,7 +35,7 @@
 
         <style>
             body{
-                margin-top: 5%;
+                margin-top: 4.5%;
             }
         </style>
 
@@ -45,12 +47,27 @@
 
         <!-- jQuery -->
         <h:outputScript library="js" name="jquery.js" />
+        <h:outputScript library="js" name="jquery-ui.js" />
         <!-- Bootstrap Core JavaScript -->
         <h:outputScript library="js" name="bootstrap.min.js" />
-
         <h:outputScript library="js" name="campos-formatados.js" />
-        
         <h:outputScript library="js" name="jquery.maskedinput.min.js" />
+
+        <script>
+            $(function () {
+                var empresas = #{postagemBean.empresas};
+                $("#empresa").autocomplete({
+                    autoFocus: true,
+                    minLength: 3,
+                    source: empresas,
+                    select: function (event, ui) {
+                        $("#empresa").val(ui.item.label);
+                        $("#empresaId").val(ui.item.value);
+                        return false;
+                    }
+                });
+            });
+        </script>
 
     </h:body>
 

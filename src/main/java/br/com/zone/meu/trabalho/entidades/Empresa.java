@@ -16,19 +16,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name = "empresas")
 public class Empresa implements BaseEntity {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(length = 100)
     @NotEmpty
     private String nome;
-    
+
     @Column(length = 100)
     @NotEmpty
     private String cnpf;
-    
+
     private String endereco;
 
     @Override
@@ -85,5 +85,9 @@ public class Empresa implements BaseEntity {
         final Empresa other = (Empresa) obj;
         return Objects.equals(this.id, other.id);
     }
-    
+
+    public String toAutoCompleteString() {
+        return "{label: '" + this.nome + "', value: " + this.id + "}";
+    }
+
 }

@@ -11,5 +11,9 @@ public class UsuarioDAO extends DAOGenerico<Usuario> {
     public UsuarioDAO() {
         super(Usuario.class);
     }
+    
+    public Usuario bucarUsuarioPorEmail(String email) {
+        return (Usuario) buscarUmResultado(Usuario.BUSCAR_USUARIO_POR_EMAIL, email);
+    }
 
 }

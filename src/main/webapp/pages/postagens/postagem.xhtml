@@ -5,6 +5,11 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{postagemBean.preCadastro()}"/>
+        </f:metadata>
+    </h:head>
     <h:body>
         <ui:composition template="../../template.xhtml">
 
@@ -26,21 +31,24 @@
 
                                     <legend>Postagem</legend>
 
-                                    <h:messages showDetail="true"
-                                                infoClass="alert alert-info"
+                                    <h:messages infoClass="alert alert-info"
                                                 warnClass="alert alert-warning"
                                                 errorClass="alert alert-danger" />
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label" for="nome">Empresa</label>
+                                        <label class="col-sm-2 control-label" for="empresa">Empresa</label>
                                         <div class="col-sm-10">
-                                            <h:inputText id="nome"
+                                            <h:inputText id="empresa"
                                                          p:type="text" 
                                                          p:placeholder="sobre qual empresa você deseja falar?" 
                                                          class="form-control"
                                                          required="true" 
-                                                         requiredMessage="O campo nome é obrigatório"
-                                                         value="#{postagemBean.entity.empresa}" />
+                                                         requiredMessage="O campo empresa é obrigatório"
+                                                         />
+                                            
+                                            <h:inputHidden id="empresaId" 
+                                                           value="#{postagemBean.entity.empresa.id}" />
+                                            
                                         </div>
 
                                     </div>
@@ -54,11 +62,10 @@
                                                              class="form-control"
                                                              value="#{postagemBean.entity.tipo}"
                                                              required="true" 
-                                                             requiredMessage="O campo estado é obrigatório" >
+                                                             requiredMessage="Por favor, informe se essa é um comentário positivo ou negativo" >
 
                                                 <f:ajax render="cidade" execute="@this" />
-                                                <f:converter converterId="simpleEntityFacesConverter" />
-
+                                                
                                                 <f:selectItem itemLabel="Selecione" />
                                                 <f:selectItems value="#{postagemBean.tipos}" />
 
@@ -75,6 +82,7 @@
                                                          p:type="text" 
                                                          p:placeholder="título para sua postagem"
                                                          class="form-control"
+                                                         value="#{postagemBean.entity.titulo}"
                                                          />
                                         </div>
                                     </div>
@@ -90,19 +98,18 @@
                                                              p:placeholder="Escreva aqui o que você acha dessa empresa como local de trabalho. 
                                                              Ou conte-nos uma experiência (positiva ou negativa) sobre que possa ajudar outros a formar uma opinião sobre esse lugar"
                                                              class="form-control"
+                                                             value="#{postagemBean.entity.texto}"
                                                              rows="5"/>
                                         </div>
 
                                     </div>
-                                    
+
                                     <div class="form-group">
 
-                                        <label class="col-sm-2 control-label" for="anonimo">Texto</label>
+                                        <label class="col-sm-2 control-label" for="anonimo"></label>
                                         <div class="col-sm-10">
-                                            <h:selectManyCheckbox value="#{postagemBean.entity.anonima}" >
-                                                <f:selectItem itemLabel="Não quero exibir minhas informações pessoais nessa postagem"
-                                                              itemValue="#{true}" />
-                                            </h:selectManyCheckbox>
+                                            <h:selectBooleanCheckbox value="#{postagemBean.entity.anonima}" />
+                                            Não quero exibir minhas informações pessoais nessa postagem
                                         </div>
 
                                     </div>
@@ -117,7 +124,7 @@
                                                 <h:commandButton type="submit" 
                                                                  class="btn btn-primary"
                                                                  value="enviar"
-                                                                 action="#{autocadastroBean.salvar()}" />
+                                                                 action="#{postagemBean.salvar()}" />
                                             </div>
                                         </div>
                                     </div>
@@ -134,16 +141,6 @@
                             <div class="well">
                                 <h4>Ei, psiu!</h4>
                                 <p>Não se preocupe, só exibiremos seus dados pessoais nas postagens se você permitir isso</p>
-                            </div>
-
-                            <div class="well">
-                                <h4>Já tem cadastro?</h4>
-                                <p>Se você já tem um cadastro faça o seu login <a href="#">aqui</a></p>
-                            </div>
-
-                            <div class="well">
-                                <h4>É responsável por alguma empresa?</h4>
-                                <p>Entre em contato conosco através do formulário disponível <a href="#">aqui</a></p>
                             </div>
 
                         </div>

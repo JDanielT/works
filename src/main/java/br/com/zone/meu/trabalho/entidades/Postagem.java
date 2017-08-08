@@ -1,8 +1,10 @@
 package br.com.zone.meu.trabalho.entidades;
 
+import br.com.zone.meu.trabalho.conversores.LocalDatePersistenceConverter;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -29,6 +31,7 @@ public class Postagem implements BaseEntity {
     @Enumerated(EnumType.STRING)
     private TipoPostagem tipo;
     
+    @Convert(converter = LocalDatePersistenceConverter.class)
     @Column(name = "data_postagem")
     private LocalDate dataPostagem;
     

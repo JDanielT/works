@@ -2,12 +2,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="template.xhtml">
-            
+
             <ui:define name="titulo">Home</ui:define>
-            
+
             <ui:define name="conteudo">
                 <!-- Page Content -->
                 <div class="container">
@@ -17,58 +18,36 @@
                         <!-- Blog Entries Column -->
                         <div class="col-md-8">
 
-                            <h1 class="page-header">
-                                Page Heading
-                                <small>Secondary Text</small>
-                            </h1>
-
-                            <!-- First Blog Post -->
-                            <h2>
-                                <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Blog Post Title</a>
-                            </h2>
-                            <p class="lead">
-                                by <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/index.php">Start Bootstrap</a>
-                            </p>
-                            <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:00 PM</p>
-                            <hr/>
-                            <img class="img-responsive" src="./Blog Home - Start Bootstrap Template_files/900x300" alt="" />
-                            <hr/>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, veritatis, tempora, necessitatibus inventore nisi quam quia repellat ut tempore laborum possimus eum dicta id animi corrupti debitis ipsum officiis rerum.</p>
-                            <a class="btn btn-primary" href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
+                            <h3>Olá, #{acessoBean.usuarioLogado == null ? 'visitante' : acessoBean.usuarioLogado.nome} !</h3>
+                            <h4>Veja abaixo as postagens mais recentes</h4>
                             <hr/>
 
-                            <!-- Second Blog Post -->
-                            <h2>
-                                <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Blog Post Title</a>
-                            </h2>
-                            <p class="lead">
-                                by <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/index.php">Start Bootstrap</a>
-                            </p>
-                            <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-                            <hr/>
-                            <img class="img-responsive" src="./Blog Home - Start Bootstrap Template_files/900x300" alt="" />
-                            <hr/>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, quasi, fugiat, asperiores harum voluptatum tenetur a possimus nesciunt quod accusamus saepe tempora ipsam distinctio minima dolorum perferendis labore impedit voluptates!</p>
-                            <a class="btn btn-primary" href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                            <ui:repeat value="#{postagemBean.itens}"
+                                       var="post" >
 
-                            <hr/>
+                                <h2>
+                                    <a href="#"><h:outputText value="#{post.titulo}" /></a>
+                                </h2>
+                                <p class="lead">
+                                    por <a href="#"><h:outputText value="#{post.usuario.nome}" /></a>
+                                </p>
+                                <p><span class="glyphicon glyphicon-time"></span> 
+                                    postado em 
+                                    <h:outputText value="#{post.dataPostagem}" >
+                                        <f:converter converterId="localDateFacesConverter" />
+                                    </h:outputText>
+                                </p>
+                                <p class="lead">
+                                    sobre <a href="#"><h:outputText value="#{post.empresa.nome}" /></a>
+                                </p>
+                                <hr/>
+                                <p><h:outputText value="#{post.texto.substring(0, 100)}..." /></p>
+                                <a class="btn btn-primary" 
+                                   href="#">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
 
-                            <!-- Third Blog Post -->
-                            <h2>
-                                <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Blog Post Title</a>
-                            </h2>
-                            <p class="lead">
-                                by <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/index.php">Start Bootstrap</a>
-                            </p>
-                            <p><span class="glyphicon glyphicon-time"></span> Posted on August 28, 2013 at 10:45 PM</p>
-                            <hr/>
-                            <img class="img-responsive" src="./Blog Home - Start Bootstrap Template_files/900x300" alt="" />
-                            <hr/>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate, voluptates, voluptas dolore ipsam cumque quam veniam accusantium laudantium adipisci architecto itaque dicta aperiam maiores provident id incidunt autem. Magni, ratione.</p>
-                            <a class="btn btn-primary" href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                <hr/>
 
-                            <hr/>
+                            </ui:repeat>
 
                             <!-- Pager -->
                             <ul class="pager">
@@ -85,11 +64,19 @@
                         <!-- Blog Sidebar Widgets Column -->
                         <div class="col-md-4">
 
+                            <div style="margin-bottom: 3%">
+
+                                <a href="pages/postagens/postagem.xhtml"
+                                   class="btn btn-primary"
+                                   style="width: 100%" >Nova postagem</a>
+
+                            </div>
+
                             <!-- Blog Search Well -->
                             <div class="well">
-                                <h4>Blog Search</h4>
+                                <h4>Buscar por empresas</h4>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" />
+                                    <input id="empresa" type="text" class="form-control" />
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="button">
                                             <span class="glyphicon glyphicon-search"></span>
@@ -144,9 +131,9 @@
                     </div>
 
                 </div>
-                
+
                 <!-- /.row -->
-                
+
             </ui:define>
         </ui:composition>
     </h:body>

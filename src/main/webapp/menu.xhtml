@@ -1,39 +1,48 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" >
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="home.xhtml">Home</a>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:form>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#{request.contextPath}/home.xhtml">Home</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <ui:fragment rendered="#{acessoBean.usuarioLogado == null}" >
+                            <li>
+                                <a href="#{request.contextPath}/autocadastro.xhtml">Cadastre-se</a>
+                            </li>
+                        </ui:fragment>
+                        <li>
+                            <a href="#{request.contextPath}/top-empresas.xhtml">Top Empresas</a>
+                        </li>
+                        <li>
+                            <a href="#{request.contextPath}/contato.xhtml">Contato</a>
+                        </li>
+                        <ui:fragment rendered="#{acessoBean.usuarioLogado != null}" >
+                            <li>
+                                <h:commandLink action="#{acessoBean.logout()}" 
+                                               value="Sair" />
+                            </li>
+                        </ui:fragment>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
             </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#{request.contextPath}/login.xhtml">Login</a>
-                    </li>
-                    <li>
-                        <a href="#{request.contextPath}/autocadastro.xhtml">Cadastre-se</a>
-                    </li>
-                    <li>
-                        <a href="#{request.contextPath}/top-empresas.xhtml">Top Empresas</a>
-                    </li>
-                    <li>
-                        <a href="#{request.contextPath}/contato.xhtml">Contato</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
+            <!-- /.container -->
+        </nav>
+    </h:form>
 </html>
 
