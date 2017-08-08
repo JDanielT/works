@@ -62,25 +62,41 @@ public class PostagemBean extends AbstractBean<Postagem> {
         return empresas;
     }
 
+    public void visualizar(){
+        super.preCadastro();
+    }
+    
     @Override
     public void preCadastro() {
         super.preCadastro();
-        getEntity().setEmpresa(new Empresa());
-        getEntity().setDataPostagem(LocalDate.now());
-        getEntity().setUsuario(acessoBean.getUsuarioLogado());
+        if (getEntity().getId() == null) {
+            getEntity().setEmpresa(new Empresa());
+            getEntity().setDataPostagem(LocalDate.now());
+            getEntity().setUsuario(acessoBean.getUsuarioLogado());
+        } else {
+            if (!getEntity().getUsuario().equals(acessoBean.getUsuarioLogado())) {
+                this.redirect(getExternalContext().getRequestContextPath() + "/403.xhtml");
+            }
+        }
     }
-
+    
     @Override
     public String salvar() {
         super.salvar();
-        ExternalContext ec = FacesContext.getCurrentInstance()
-        .getExternalContext();
+        this.redirect(getExternalContext().getRequestContextPath() + "/home.xhtml");
+        return null;
+    }
+
+    private void redirect(String pagina){
         try {
-            ec.redirect(ec.getRequestContextPath() + "/home.xhtml");
+            getExternalContext().redirect(pagina);
         } catch (IOException ex) {
             Logger.getLogger(PostagemBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
+    }
+    
+    private ExternalContext getExternalContext() {
+        return FacesContext.getCurrentInstance().getExternalContext();
     }
 
 }

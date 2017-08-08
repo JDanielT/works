@@ -25,9 +25,30 @@
                             <ui:repeat value="#{postagemBean.itens}"
                                        var="post" >
 
-                                <h2>
-                                    <a href="#"><h:outputText value="#{post.titulo}" /></a>
-                                </h2>
+                                <div class="row">
+
+                                    <div class="col-lg-8" >
+
+                                        <h3>
+                                            <a href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">
+                                                <h:outputText value="#{post.titulo}" />
+                                            </a>
+                                        </h3>
+
+                                    </div>
+
+                                    <div class="col-lg-4"
+                                         style="text-align: right">
+                                        <br/>
+                                        <ui:fragment rendered="#{post.usuario.id == acessoBean.usuarioLogado.id}" >
+                                            <a href="#{request.contextPath}/pages/postagens/postagem.xhtml?id=#{post.id}" class="btn btn-warning">                                            
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </a>
+                                        </ui:fragment>
+                                    </div>
+
+                                </div>
+
                                 <p class="lead">
                                     por <a href="#"><h:outputText value="#{post.usuario.nome}" /></a>
                                 </p>
@@ -43,7 +64,7 @@
                                 <hr/>
                                 <p><h:outputText value="#{post.texto.substring(0, 100)}..." /></p>
                                 <a class="btn btn-primary" 
-                                   href="#">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                   href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
 
                                 <hr/>
 

@@ -24,45 +24,45 @@ public class AtivaCadastroServlet extends HttpServlet {
 
     @Inject
     private TokenDAO tokenDAO;
-    
+
     @Inject
     private UsuarioDAO usuarioDAO;
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        
+
         Token token = tokenDAO.buscarTokenPorHash(req.getParameter("token"));
-        
-        if(token == null){
-            
+
+        if (token == null) {
+
             req.setAttribute("mensagem", "O token informado não é válido");
-            
-        }else{
-            
+
+        } else {
+
             Usuario usuario = token.getUsuario();
             usuario.setAtivo(Boolean.TRUE);
-            
+
             try {
-                
+
                 usuarioDAO.salvar(usuario);
-                
+
                 tokenDAO.excluir(token);
-                
+
             } catch (Exception ex) {
                 Logger.getLogger(AtivaCadastroServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             req.setAttribute("mensagem", "Sua conta foi ativado com sucesso, "
-                                       + "faça login para continuar");
-            
+                    + "faça login para continuar");
+
         }
-        
+
         try {
-            req.getRequestDispatcher("login.xhtml").forward(req, resp);
+            req.getRequestDispatcher(req.getContextPath() + "/pages/postagens/postagem.xhtml").forward(req, resp);
         } catch (ServletException | IOException ex) {
             Logger.getLogger(AtivaCadastroServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
 }

@@ -29,12 +29,12 @@
 
                                 <fieldset>
 
-                                    <legend>Postagem</legend>
+                                    <legend><h:outputText value="#{postagemBean.entity.titulo}" /></legend>
 
                                     <h:messages infoClass="alert alert-info"
                                                 warnClass="alert alert-warning"
                                                 errorClass="alert alert-danger" />
-
+                                    
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="empresa">Empresa</label>
                                         <div class="col-sm-10">
@@ -44,9 +44,9 @@
                                                          class="form-control"
                                                          required="true" 
                                                          requiredMessage="O campo empresa é obrigatório"
-                                                         />
+                                                         value="#{postagemBean.entity.empresa.nome}" />
                                             
-                                            <h:inputHidden id="empresaId" 
+                                            <h:inputHidden id="empresaId"
                                                            value="#{postagemBean.entity.empresa.id}" />
                                             
                                         </div>

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <f:metadata>
+            <f:viewAction action="#{postagemBean.visualizar()}"/>
+        </f:metadata>
+    </h:head>
+    <h:body>
+        <ui:composition template="../../template.xhtml">
+
+            <ui:define name="titulo">Postagem</ui:define>
+
+            <ui:define name="conteudo">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <h:form class="form-horizontal" 
+                                    role="form"
+                                    prependId="false" >
+
+                                <fieldset>
+
+                                    <legend>Enviado em <h:outputText value="#{postagemBean.entity.dataPostagem}" >
+                                            <f:converter converterId="localDateFacesConverter" />
+                                        </h:outputText>
+                                    </legend>
+
+                                    <h:messages infoClass="alert alert-info"
+                                                warnClass="alert alert-warning"
+                                                errorClass="alert alert-danger" />
+
+                                    <div class="form-group col-sm-12" >
+                                        <h4>
+                                            Enviado por 
+                                            <h:outputText value="#{postagemBean.entity.anonima ? 'Anonimo' :  postagemBean.entity.usuario.nome}" />
+                                        </h4>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="empresa">Empresa</label>
+                                        <div class="col-sm-10">
+                                            <h:outputText value="#{postagemBean.entity.empresa.nome}" />                                                                                        
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="tipo">Isso conta como um ponto </label>
+                                        <div class="col-sm-8">
+                                            <br/>
+                                            <h:outputText value="#{postagemBean.entity.tipo}" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="titulo">Título</label>
+                                        <div class="col-sm-10">
+                                            <h:outputText value="#{postagemBean.entity.titulo}" />
+                                        </div>
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="texto">Texto</label>
+                                        <div class="col-sm-10">
+                                            <h:outputText value="#{postagemBean.entity.texto}" />
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <a href="#" style="margin: 5px; font-size: 15px" ><span class="glyphicon glyphicon-thumbs-up" ></span> (0) </a>
+                                            <a href="#" style="color: red; font-size: 15px"><span class="glyphicon glyphicon-thumbs-down" ></span> (0) </a>
+                                        </div>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <div class="pull-right">
+                                                <a href="#{request.contextPath}/home.xhtml" class="btn btn-default" >voltar</a>
+                                                <span style="width: 1px" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                            </h:form>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <!-- Side Widget Well -->
+                            <div class="well">
+                                <h4>Ei, psiu!</h4>
+                                <p>Quer fazer uma postagem também? Clique <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
