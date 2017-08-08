@@ -22,59 +22,69 @@
                             <h4>Veja abaixo as postagens mais recentes</h4>
                             <hr/>
 
+                            <h:panelGroup id="busca" >
 
-                            <ui:fragment id="busca" >
-                                <h:outputText value="Mostrando resultados da busca por #{postagemBean.empresa}" 
-                                              rendered="#{postagemBean.empresa != null}" />
-                            </ui:fragment>
+                                <h4>
 
-                            <ui:repeat value="#{postagemBean.itens}"
-                                       var="post" >
+                                    <i>
+                                        <h:outputText value="Mostrando resultados da busca por '#{postagemBean.empresa.nome}'. #{postagemBean.itens.size()} resultado(s)" 
+                                                      rendered="#{postagemBean.empresa != null and postagemBean.empresa.id != null}" />
+                                    </i>
+                                </h4>
 
-                                <div class="row">
+                            </h:panelGroup>
 
-                                    <div class="col-lg-8" >
+                            <h:panelGroup id="postagem" >
 
-                                        <h3>
-                                            <a href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">
-                                                <h:outputText value="#{post.titulo}" />
-                                            </a>
-                                        </h3>
+                                <ui:repeat value="#{postagemBean.itens}"
+                                    var="post" >
+
+                                    <div class="row">
+
+                                        <div class="col-lg-8" >
+
+                                            <h3>
+                                                <a href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">
+                                                    <h:outputText value="#{post.titulo}" />
+                                                </a>
+                                            </h3>
+
+                                        </div>
+
+                                        <div class="col-lg-4"
+                                             style="text-align: right">
+                                            <br/>
+                                            <ui:fragment rendered="#{post.usuario.id == acessoBean.usuarioLogado.id}" >
+                                                <a href="#{request.contextPath}/pages/postagens/postagem.xhtml?id=#{post.id}" class="btn btn-warning">                                            
+                                                    <span class="glyphicon glyphicon-pencil"></span>
+                                                </a>
+                                            </ui:fragment>
+                                        </div>
 
                                     </div>
 
-                                    <div class="col-lg-4"
-                                         style="text-align: right">
-                                        <br/>
-                                        <ui:fragment rendered="#{post.usuario.id == acessoBean.usuarioLogado.id}" >
-                                            <a href="#{request.contextPath}/pages/postagens/postagem.xhtml?id=#{post.id}" class="btn btn-warning">                                            
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
-                                        </ui:fragment>
-                                    </div>
+                                    <p class="lead">
+                                        por <a href="#"><h:outputText value="#{post.usuario.nome}" /></a>
+                                    </p>
+                                    <p><span class="glyphicon glyphicon-time"></span> 
+                                        postado em 
+                                        <h:outputText value="#{post.dataPostagem}" >
+                                            <f:converter converterId="localDateFacesConverter" />
+                                        </h:outputText>
+                                    </p>
+                                    <p class="lead">
+                                        sobre <a href="#"><h:outputText value="#{post.empresa.nome}" /></a>
+                                    </p>
+                                    <hr/>
+                                    <p><h:outputText value="#{post.texto.substring(0, 100)}..." /></p>
+                                    <a class="btn btn-primary" 
+                                       href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
 
-                                </div>
+                                    <hr/>
 
-                                <p class="lead">
-                                    por <a href="#"><h:outputText value="#{post.usuario.nome}" /></a>
-                                </p>
-                                <p><span class="glyphicon glyphicon-time"></span> 
-                                    postado em 
-                                    <h:outputText value="#{post.dataPostagem}" >
-                                        <f:converter converterId="localDateFacesConverter" />
-                                    </h:outputText>
-                                </p>
-                                <p class="lead">
-                                    sobre <a href="#"><h:outputText value="#{post.empresa.nome}" /></a>
-                                </p>
-                                <hr/>
-                                <p><h:outputText value="#{post.texto.substring(0, 100)}..." /></p>
-                                <a class="btn btn-primary" 
-                                   href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
+                                </ui:repeat>
 
-                                <hr/>
-
-                            </ui:repeat>
+                            </h:panelGroup>
 
                             <!-- Pager -->
                             <ul class="pager">
@@ -101,22 +111,47 @@
 
                             <!-- Blog Search Well -->
                             <div class="well">
-                                
-                                <h4>Buscar por empresas</h4>
-                                <div class="input-group">
 
-                                    <h:form id="formBusca" prependId="false">
+                                <h4>Buscar por empresas</h4>
+
+                                <h:form id="formBusca" prependId="false">
+
+                                    <div class="input-group">
 
                                         <input id="empresa" type="text" class="form-control" />
+                                        <h:inputHidden id="empresaId"
+                                                       value="#{postagemBean.empresa.id}" />
+
                                         <span class="input-group-btn">
-                                            <h:commandButton class="btn btn-default" >
-                                                <span class="glyphicon glyphicon-search"></span>
-                                            </h:commandButton>
+                                            <h:commandLink id="btnSearch"
+                                                           action="#{postagemBean.buscar()}"
+                                                           styleClass="btn btn-default" 
+                                                           title="buscar" >
+
+                                                <f:ajax render=":busca :postagem" execute="empresaId" />
+
+                                                <i class="glyphicon glyphicon-search"></i>
+
+                                            </h:commandLink>
+                                        </span>
+                                        
+                                        <span class="input-group-btn">
+                                            <h:commandLink id="btnRefresh"
+                                                           action="#{postagemBean.limparBusca()}"
+                                                           styleClass="btn btn-default"
+                                                           title="mostrar mais recentes" >
+
+                                                <f:ajax render=":busca :postagem" />
+
+                                                <i class="glyphicon glyphicon-refresh"></i>
+
+                                            </h:commandLink>
                                         </span>
 
-                                    </h:form>
+                                    </div>
 
-                                </div>
+                                </h:form>
+
                                 <!-- /.input-group -->
                             </div>
 

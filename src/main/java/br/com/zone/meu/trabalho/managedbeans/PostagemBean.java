@@ -35,7 +35,7 @@ public class PostagemBean extends AbstractBean<Postagem> {
     @Inject
     private AcessoBean acessoBean;
     
-    //para buscas
+    @Inject
     private Empresa empresa;
     
     public PostagemBean() {
@@ -91,9 +91,16 @@ public class PostagemBean extends AbstractBean<Postagem> {
     }
     
     public void buscar(){
-        if(empresa != null){
+        if(empresa != null && empresa.getId() != null){
+            empresa = empresaDAO.buscarPorId(empresa.getId());
             setItens(postagemDAO.buscarPostagensPorEmpresa(empresa));
         }
+    }
+    
+    public void limparBusca(){
+        empresa = new Empresa();
+        super.setItens(null);
+        super.getItens();
     }
     
     @Override
