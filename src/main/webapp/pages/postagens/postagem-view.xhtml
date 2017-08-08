@@ -76,8 +76,8 @@
                                     <div class="form-group">
 
                                         <label class="col-sm-2 control-label" for="texto">Texto</label>
-                                        <div class="col-sm-10">
-                                            <h:outputText value="#{postagemBean.entity.texto}" />
+                                        <div class="col-sm-10" style="white-space: pre-wrap">
+                                            <h:outputText value="#{postagemBean.entity.texto}"  />
                                         </div>
 
                                     </div>
@@ -110,6 +110,11 @@
                             <div class="well">
                                 <h4>Ei, psiu!</h4>
                                 <p>Quer fazer uma postagem também? Clique <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
+                            </div>
+                            
+                            <div class="well">
+                                <h4>Você é o responsável por essa empresa?</h4>
+                                <p>Gostaria de responder a essa postagem? Entre em contato pelo formulário disponível <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
                             </div>
 
                         </div>

@@ -5,14 +5,13 @@ import br.com.zone.meu.trabalho.daos.PostagemDAO;
 import br.com.zone.meu.trabalho.entidades.Empresa;
 import br.com.zone.meu.trabalho.entidades.Postagem;
 import br.com.zone.meu.trabalho.entidades.TipoPostagem;
+import br.com.zone.meu.trabalho.util.JSFUtil;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,9 +34,20 @@ public class PostagemBean extends AbstractBean<Postagem> {
 
     @Inject
     private AcessoBean acessoBean;
-
+    
+    //para buscas
+    private Empresa empresa;
+    
     public PostagemBean() {
         super(Postagem.class);
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     @Override
@@ -75,28 +85,30 @@ public class PostagemBean extends AbstractBean<Postagem> {
             getEntity().setUsuario(acessoBean.getUsuarioLogado());
         } else {
             if (!getEntity().getUsuario().equals(acessoBean.getUsuarioLogado())) {
-                this.redirect(getExternalContext().getRequestContextPath() + "/403.xhtml");
+                this.redirect(JSFUtil.getExternalContext().getRequestContextPath() + "/403.xhtml");
             }
+        }
+    }
+    
+    public void buscar(){
+        if(empresa != null){
+            setItens(postagemDAO.buscarPostagensPorEmpresa(empresa));
         }
     }
     
     @Override
     public String salvar() {
         super.salvar();
-        this.redirect(getExternalContext().getRequestContextPath() + "/home.xhtml");
+        this.redirect(JSFUtil.getExternalContext().getRequestContextPath() + "/home.xhtml");
         return null;
     }
 
     private void redirect(String pagina){
         try {
-            getExternalContext().redirect(pagina);
+            JSFUtil.getExternalContext().redirect(pagina);
         } catch (IOException ex) {
             Logger.getLogger(PostagemBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private ExternalContext getExternalContext() {
-        return FacesContext.getCurrentInstance().getExternalContext();
-    }
-
 }

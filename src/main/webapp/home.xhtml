@@ -22,6 +22,12 @@
                             <h4>Veja abaixo as postagens mais recentes</h4>
                             <hr/>
 
+
+                            <ui:fragment id="busca" >
+                                <h:outputText value="Mostrando resultados da busca por #{postagemBean.empresa}" 
+                                              rendered="#{postagemBean.empresa != null}" />
+                            </ui:fragment>
+
                             <ui:repeat value="#{postagemBean.itens}"
                                        var="post" >
 
@@ -95,14 +101,21 @@
 
                             <!-- Blog Search Well -->
                             <div class="well">
+                                
                                 <h4>Buscar por empresas</h4>
                                 <div class="input-group">
-                                    <input id="empresa" type="text" class="form-control" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                        </button>
-                                    </span>
+
+                                    <h:form id="formBusca" prependId="false">
+
+                                        <input id="empresa" type="text" class="form-control" />
+                                        <span class="input-group-btn">
+                                            <h:commandButton class="btn btn-default" >
+                                                <span class="glyphicon glyphicon-search"></span>
+                                            </h:commandButton>
+                                        </span>
+
+                                    </h:form>
+
                                 </div>
                                 <!-- /.input-group -->
                             </div>

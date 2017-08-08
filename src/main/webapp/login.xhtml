@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Acesso</title>
         <h:outputStylesheet library="css" name="bootstrap.css" />
@@ -22,12 +23,6 @@
                             #{requestScope.mensagem}
                         </div>
                     </ui:fragment>
-                    
-                    <ui:fragment rendered="#{param['fail-login']}" >
-                        <div class="alert alert-danger" >
-                            e-mail ou senha incorreta!
-                        </div>
-                    </ui:fragment>
 
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
@@ -42,32 +37,42 @@
                         <span class="span-or">or</span>
                     </div>
 
-                    <form role="form"
-                          method="POST"
-                          action="j_security_check">
+                    <h:form role="form" >
+
+                        <h:messages infoClass="alert alert-info"
+                                    warnClass="alert alert-warning"
+                                    errorClass="alert alert-danger"
+                                    showDetail="true" 
+                                    style="padding: 0; list-style-type: none;"/>
+
+                        <br/>
+
                         <div class="form-group">
                             <label for="inputUsernameEmail">e-mail</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="inputUsernameEmail"
-                                   name="j_username"/>
+                            <h:inputText p:type="text" 
+                                         class="form-control" 
+                                         id="inputUsernameEmail"
+                                         value="#{acessoBean.email}" />
                         </div>
+
                         <div class="form-group">
-                            <label for="inputPassword">senha</label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="inputPassword"
-                                   name="j_password" />
+                            <label for="inputPass">senha</label>
+                            <h:inputSecret p:type="password" 
+                                           class="form-control" 
+                                           id="inputPass"
+                                           value="#{acessoBean.senha}" />
                         </div>
-                        <button type="submit" class="btn btn btn-primary">
-                            entrar
-                        </button>
+
+                        <h:commandButton value="entrar" 
+                                         class="btn btn btn-primary" 
+                                         action="#{acessoBean.login()}" />
+
                         <div class="form-group">
                             <a class="pull-right" href="#">esqueceu a senha?</a><br/>
                             <a class="pull-right" href="#">não recebeu o e-mail de confirmação?</a>
                         </div>
 
-                    </form>
+                    </h:form>
 
                 </div>
 

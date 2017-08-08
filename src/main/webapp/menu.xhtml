@@ -22,6 +22,9 @@
                     <ul class="nav navbar-nav">
                         <ui:fragment rendered="#{acessoBean.usuarioLogado == null}" >
                             <li>
+                                <a href="#{request.contextPath}/login.xhtml">Entrar</a>
+                            </li>
+                            <li>
                                 <a href="#{request.contextPath}/autocadastro.xhtml">Cadastre-se</a>
                             </li>
                         </ui:fragment>

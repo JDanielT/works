@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,7 +24,13 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "postagens")
+@NamedQueries({
+    @NamedQuery(name = Postagem.BUSCAR_POSTAGENS_POR_EMPRESA,
+            query = "SELECT p FROM Postagem p WHERE p.empresa.id = ?1")
+})
 public class Postagem implements BaseEntity {
+    
+    public static final String BUSCAR_POSTAGENS_POR_EMPRESA = "Postagem.buscarPostagensPorEmpresa";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -27,7 +27,7 @@ public class Empresa implements BaseEntity {
 
     @Column(length = 100)
     @NotEmpty
-    private String cnpf;
+    private String cnpj;
 
     private String endereco;
 
@@ -48,12 +48,12 @@ public class Empresa implements BaseEntity {
         this.nome = nome;
     }
 
-    public String getCnpf() {
-        return cnpf;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCnpf(String cnpf) {
-        this.cnpf = cnpf;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getEndereco() {

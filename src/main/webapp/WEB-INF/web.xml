@@ -48,7 +48,6 @@
         <auth-method>FORM</auth-method>
         <form-login-config>
             <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/login.xhtml?fail-login=true</form-error-page>
         </form-login-config>
     </login-config>
 
