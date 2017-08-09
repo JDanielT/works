@@ -1,10 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "httph://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:ph="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui" >
     <h:head>
         <f:metadata>
             <f:viewAction action="#{postagemBean.preCadastro()}"/>
@@ -35,21 +36,21 @@
                                                 warnClass="alert alert-warning"
                                                 errorClass="alert alert-danger"
                                                 style="padding: 0; list-style-type: none;" />
-                                    
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="empresa">Empresa</label>
                                         <div class="col-sm-10">
                                             <h:inputText id="empresa"
-                                                         p:type="text" 
-                                                         p:placeholder="sobre qual empresa você deseja falar?" 
+                                                         ph:type="text" 
+                                                         ph:placeholder="sobre qual empresa você deseja falar?" 
                                                          class="form-control"
                                                          required="true" 
                                                          requiredMessage="O campo empresa é obrigatório"
                                                          value="#{postagemBean.entity.empresa.nome}" />
-                                            
+
                                             <h:inputHidden id="empresaId"
                                                            value="#{postagemBean.entity.empresa.id}" />
-                                            
+
                                         </div>
 
                                     </div>
@@ -65,8 +66,8 @@
                                                              required="true" 
                                                              requiredMessage="Por favor, informe se essa é um comentário positivo ou negativo" >
 
-                                                <f:ajax render="cidade" execute="@this" />
-                                                
+                                                <f:ajax render=":lembreteRespeitoso" execute="@this" />
+
                                                 <f:selectItem itemLabel="Selecione" />
                                                 <f:selectItems value="#{postagemBean.tipos}" />
 
@@ -80,8 +81,8 @@
                                         <label class="col-sm-2 control-label" for="titulo">Título</label>
                                         <div class="col-sm-10">
                                             <h:inputText id="titulo"
-                                                         p:type="text" 
-                                                         p:placeholder="título para sua postagem"
+                                                         ph:type="text" 
+                                                         ph:placeholder="título para sua postagem"
                                                          class="form-control"
                                                          value="#{postagemBean.entity.titulo}"
                                                          />
@@ -95,12 +96,24 @@
                                         <label class="col-sm-2 control-label" for="texto">Texto</label>
                                         <div class="col-sm-10">
                                             <h:inputTextarea id="texto"
-                                                             p:type="text" 
-                                                             p:placeholder="Escreva aqui o que você acha dessa empresa como local de trabalho. 
+                                                             ph:type="text" 
+                                                             ph:placeholder="Escreva aqui o que você acha dessa empresa como local de trabalho. 
                                                              Ou conte-nos uma experiência (positiva ou negativa) sobre que possa ajudar outros a formar uma opinião sobre esse lugar"
                                                              class="form-control"
                                                              value="#{postagemBean.entity.texto}"
-                                                             rows="5"/>
+                                                             rows="5" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="texto">Como você classifica essa empresa?</label>
+                                        <div class="col-sm-10">
+                                            <p:rating value="#{postagemBean.entity.voto.valor}" 
+                                                      required="true"
+                                                      requiredMessage="Por favor, forneça uma classificação para essa empresa de 1 a 5" 
+                                                      />
                                         </div>
 
                                     </div>
@@ -143,6 +156,19 @@
                                 <h4>Ei, psiu!</h4>
                                 <p>Não se preocupe, só exibiremos seus dados pessoais nas postagens se você permitir isso</p>
                             </div>
+
+                            <h:panelGroup id="lembreteRespeitoso" >
+                                
+                                <ui:fragment rendered="#{postagemBean.entity.tipo ==  'NEGATIVO'}"  >
+                                
+                                    <div class="well">
+                                        <h4>Um lembrete</h4>
+                                        <p>Mesmo que você tenha passado por uma experiência ruim com essa empresa escreva com respeito para evitar que sua postagem seja retirada</p>
+                                    </div>
+
+                                </ui:fragment>
+                                
+                            </h:panelGroup>
 
                         </div>
 

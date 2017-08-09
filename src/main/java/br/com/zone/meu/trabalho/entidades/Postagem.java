@@ -3,6 +3,7 @@ package br.com.zone.meu.trabalho.entidades;
 import br.com.zone.meu.trabalho.conversores.LocalDatePersistenceConverter;
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -61,6 +63,9 @@ public class Postagem implements BaseEntity {
     private String imagem;
     
     private boolean anonima;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    private Voto voto;
 
     @Override
     public Long getId() {
@@ -133,6 +138,14 @@ public class Postagem implements BaseEntity {
 
     public void setAnonima(boolean anonima) {
         this.anonima = anonima;
+    }
+
+    public Voto getVoto() {
+        return voto;
+    }
+
+    public void setVoto(Voto voto) {
+        this.voto = voto;
     }
     
     @Override

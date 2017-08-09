@@ -5,7 +5,9 @@ import br.com.zone.meu.trabalho.daos.PostagemDAO;
 import br.com.zone.meu.trabalho.entidades.Empresa;
 import br.com.zone.meu.trabalho.entidades.Postagem;
 import br.com.zone.meu.trabalho.entidades.TipoPostagem;
+import br.com.zone.meu.trabalho.entidades.Voto;
 import br.com.zone.meu.trabalho.util.JSFUtil;
+import br.com.zone.meu.trabalho.util.MensagemUtil;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -83,6 +85,7 @@ public class PostagemBean extends AbstractBean<Postagem> {
             getEntity().setEmpresa(new Empresa());
             getEntity().setDataPostagem(LocalDate.now());
             getEntity().setUsuario(acessoBean.getUsuarioLogado());
+            getEntity().setVoto(new Voto());
         } else {
             if (!getEntity().getUsuario().equals(acessoBean.getUsuarioLogado())) {
                 this.redirect(JSFUtil.getExternalContext().getRequestContextPath() + "/403.xhtml");
@@ -105,9 +108,20 @@ public class PostagemBean extends AbstractBean<Postagem> {
     
     @Override
     public String salvar() {
+        
+        getEntity().getVoto().setEmpresa(getEntity().getEmpresa());
+        getEntity().getVoto().setUsuario(getEntity().getUsuario());
+        
+        if(getEntity().getTexto().length() < 100){
+            MensagemUtil.mensagemDeAlerta("Sua mensagem precisa ter pelo menos 100 caracteres", null);
+            return null;
+        }
+        
         super.salvar();
+        
         this.redirect(JSFUtil.getExternalContext().getRequestContextPath() + "/home.xhtml");
         return null;
+        
     }
 
     private void redirect(String pagina){

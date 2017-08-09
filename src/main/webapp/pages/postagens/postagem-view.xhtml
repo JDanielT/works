@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <f:metadata>
             <f:viewAction action="#{postagemBean.visualizar()}"/>
@@ -40,8 +41,15 @@
                                     <div class="form-group col-sm-12" >
                                         <h4>
                                             Enviado por 
-                                            <h:outputText value="#{postagemBean.entity.anonima ? 'Anonimo' :  postagemBean.entity.usuario.nome}" />
+                                            <i><h:outputText value="#{postagemBean.entity.anonima ? 'Anonimo' :  postagemBean.entity.usuario.nome}" /></i>
                                         </h4>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" >Avaliação do Autor</label>
+                                        <div class="col-sm-10">
+                                            <p:rating value="#{postagemBean.entity.voto.valor}" readonly="true" />
+                                        </div>
                                     </div>
 
                                     <div class="form-group">
@@ -49,7 +57,6 @@
                                         <div class="col-sm-10">
                                             <h:outputText value="#{postagemBean.entity.empresa.nome}" />                                                                                        
                                         </div>
-
                                     </div>
 
                                     <hr/>
