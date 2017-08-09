@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
         <ui:composition template="template.xhtml">
 
@@ -97,15 +98,35 @@
 
                             </h:panelGroup>
 
-                            <!-- Pager -->
-                            <ul class="pager">
-                                <li class="previous">
-                                    <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">← Older</a>
-                                </li>
-                                <li class="next">
-                                    <a href="https://blackrockdigital.github.io/startbootstrap-blog-home/#">Newer →</a>
-                                </li>
-                            </ul>
+                            <h:form id="paginator"
+                                    prependId="false" >
+
+                                <ui:fragment id="painel"
+                                             rendered="#{postagemBean.empresa == null or postagemBean.empresa.id == null}" >
+
+                                    <!-- Pager -->
+                                    <ul class="pager">
+                                        <li class="previous">
+                                            <h:commandLink action="#{postagemBean.anterior}" disabled="#{postagemBean.pagina == 0}" >
+                                                ← Anterior
+                                                <f:ajax render="postagem paginator" />
+                                            </h:commandLink>
+                                        </li>
+                                        
+                                        #{!postagemBean.proximoAtivo}
+
+                                        <li class="next">
+                                            <h:commandLink action="#{postagemBean.proxima}" 
+                                                           disabled="#{!postagemBean.proximoAtivo}" >
+                                                Próxima →
+                                                <f:ajax render="postagem paginator" />
+                                            </h:commandLink>
+                                        </li>
+                                    </ul>
+
+                                </ui:fragment>
+
+                            </h:form>
 
                         </div>
 
@@ -135,7 +156,7 @@
 
                                         <span class="input-group-btn">
                                             <h:commandLink id="btnSearch"
-                                                           action="#{postagemBean.buscar()}"
+                                                           action="#{postagemBean.buscarPorEmpresa()}"
                                                            styleClass="btn btn-default" 
                                                            title="buscar" >
 

@@ -85,6 +85,8 @@
                                                          ph:placeholder="título para sua postagem"
                                                          class="form-control"
                                                          value="#{postagemBean.entity.titulo}"
+                                                         required="true"
+                                                         requiredMessage="O campo título é obrigatório"
                                                          />
                                         </div>
                                     </div>
@@ -101,7 +103,9 @@
                                                              Ou conte-nos uma experiência (positiva ou negativa) sobre que possa ajudar outros a formar uma opinião sobre esse lugar"
                                                              class="form-control"
                                                              value="#{postagemBean.entity.texto}"
-                                                             rows="5" />
+                                                             rows="5" 
+                                                             required="true"
+                                                             requiredMessage="O texto título é obrigatório" />
                                         </div>
 
                                     </div>

@@ -59,7 +59,7 @@ public class AutocadastroBean implements Serializable {
     public List<SelectItem> getEstados() {
         if (estados == null) {
             estados = new ArrayList<>();
-            estadoDAO.listarTodos().forEach((e) -> {
+            estadoDAO.buscarTodos().forEach((e) -> {
                 estados.add(new SelectItem(e, e.getSigla()));
             });
         }

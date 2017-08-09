@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -45,13 +46,11 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         em.remove(entityToBeRemoved);
     }
 
-    @Transacional
     public T buscarPorId(Object id) {
         T resultado = em.find(entityClass, id);
         return resultado;
     }
-    
-    @Transacional
+
     @SuppressWarnings("unchecked")
     protected Serializable buscarUmResultado(String namedQuery, Object... params) {
         Serializable result = null;
@@ -67,9 +66,8 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         return result;
     }
 
-    @Transacional
     @SuppressWarnings({"unchecked", "rawtypes"})
-    public List<T> listarTodos() {
+    public List<T> buscarTodos() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> root = cq.from(entityClass);
@@ -79,14 +77,31 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         return resultado;
     }
 
-    @Transacional
-    protected List<T> listar(String namedQuery, Object... params) {
+    protected List<T> buscar(String namedQuery, Object... params) {
         Query q = em.createNamedQuery(namedQuery);
         for (int i = 0; i < params.length; i++) {
             q.setParameter(i + 1, params[i]);
         }
         List<T> resultado = q.getResultList();
         return resultado;
+    }
+
+    public List<T> buscarComLimite(int paginaAtual, int tamanhoPagina) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> cq = cb.createQuery(entityClass);
+        Root<T> root = cq.from(entityClass);
+        cq.select(root);
+        TypedQuery typedQuery = em.createQuery(cq);
+        typedQuery.setFirstResult(paginaAtual);
+        typedQuery.setMaxResults(tamanhoPagina);
+        return typedQuery.getResultList();
+    }
+
+    public Long count() {
+        CriteriaBuilder qb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
+        cq.select(qb.count(cq.from(entityClass)));
+        return em.createQuery(cq).getSingleResult();
     }
 
 }

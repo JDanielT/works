@@ -44,7 +44,7 @@ public abstract class AbstractBean<T extends BaseEntity> implements Serializable
 
     public Collection<T> getItens() {
         if (itens == null) {
-            itens = getDAO().listarTodos();
+            itens = getDAO().buscarTodos();
         }
         return itens;
     }

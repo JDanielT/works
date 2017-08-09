@@ -9,11 +9,14 @@ import br.com.zone.meu.trabalho.entidades.Voto;
 import br.com.zone.meu.trabalho.util.JSFUtil;
 import br.com.zone.meu.trabalho.util.MensagemUtil;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,12 +39,24 @@ public class PostagemBean extends AbstractBean<Postagem> {
 
     @Inject
     private AcessoBean acessoBean;
-    
+
+    //busca de postagens por empresa
     @Inject
     private Empresa empresa;
-    
+
+    //lazylist
+    private int pagina = 0;
+    private long totalRegistros;
+    private final int tamanhoPagina = 3;
+
     public PostagemBean() {
         super(Postagem.class);
+    }
+
+    @PostConstruct
+    public void init() {
+        this.buscar();
+        this.totalRegistros = postagemDAO.count();
     }
 
     public Empresa getEmpresa() {
@@ -52,6 +67,26 @@ public class PostagemBean extends AbstractBean<Postagem> {
         this.empresa = empresa;
     }
 
+    public int getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(int pagina) {
+        this.pagina = pagina;
+    }
+
+    public int getTamanhoPagina() {
+        return tamanhoPagina;
+    }
+
+    public long getTotalRegistros() {
+        return totalRegistros;
+    }
+
+    public void setTotalRegistros(long totalRegistros) {
+        this.totalRegistros = totalRegistros;
+    }
+    
     @Override
     protected PostagemDAO getDAO() {
         return postagemDAO;
@@ -68,16 +103,43 @@ public class PostagemBean extends AbstractBean<Postagem> {
 
     public List<String> getEmpresas() {
         List<String> empresas = new ArrayList<>();
-        empresaDAO.listarTodos().forEach((e) -> {
+        empresaDAO.buscarTodos().forEach((e) -> {
             empresas.add(e.toAutoCompleteString());
         });
         return empresas;
     }
 
-    public void visualizar(){
+    public void visualizar() {
         super.preCadastro();
     }
+
+    @Override
+    public Collection<Postagem> getItens() {
+        return super.itens;
+    }
+
+    public void buscar() {
+        itens = getDAO().buscarComLimite(pagina, tamanhoPagina);
+    }
+
+    public void proxima() {
+        pagina = pagina + tamanhoPagina;
+        this.buscar();
+    }
     
+    public boolean isProximoAtivo(){
+        return totalRegistros > tamanhoPagina  || pagina < this.getTotalPaginas();
+    }
+
+    public void anterior() {
+        pagina = pagina - tamanhoPagina;
+        this.buscar();
+    }
+
+    public long getTotalPaginas() {
+        return new BigDecimal(totalRegistros / tamanhoPagina).setScale(0, BigDecimal.ROUND_UP).longValue();
+    }
+
     @Override
     public void preCadastro() {
         super.preCadastro();
@@ -92,44 +154,44 @@ public class PostagemBean extends AbstractBean<Postagem> {
             }
         }
     }
-    
-    public void buscar(){
-        if(empresa != null && empresa.getId() != null){
+
+    public void buscarPorEmpresa() {
+        if (empresa != null && empresa.getId() != null) {
             empresa = empresaDAO.buscarPorId(empresa.getId());
             setItens(postagemDAO.buscarPostagensPorEmpresa(empresa));
         }
     }
-    
-    public void limparBusca(){
+
+    public void limparBusca() {
         empresa = new Empresa();
         super.setItens(null);
         super.getItens();
     }
-    
+
     @Override
     public String salvar() {
-        
+
         getEntity().getVoto().setEmpresa(getEntity().getEmpresa());
         getEntity().getVoto().setUsuario(getEntity().getUsuario());
-        
-        if(getEntity().getTexto().length() < 100){
+
+        if (getEntity().getTexto().length() < 100) {
             MensagemUtil.mensagemDeAlerta("Sua mensagem precisa ter pelo menos 100 caracteres", null);
             return null;
         }
-        
+
         super.salvar();
-        
+
         this.redirect(JSFUtil.getExternalContext().getRequestContextPath() + "/home.xhtml");
         return null;
-        
+
     }
 
-    private void redirect(String pagina){
+    private void redirect(String pagina) {
         try {
             JSFUtil.getExternalContext().redirect(pagina);
         } catch (IOException ex) {
             Logger.getLogger(PostagemBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

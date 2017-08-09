@@ -15,7 +15,7 @@ public class PostagemDAO extends DAOGenerico<Postagem> {
     }
     
     public List<Postagem> buscarPostagensPorEmpresa(Empresa empresa){
-        return listar(Postagem.BUSCAR_POSTAGENS_POR_EMPRESA, empresa.getId());
+        return buscar(Postagem.BUSCAR_POSTAGENS_POR_EMPRESA, empresa.getId());
     }
 
 }

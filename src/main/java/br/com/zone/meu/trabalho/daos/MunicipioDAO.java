@@ -15,7 +15,7 @@ public class MunicipioDAO extends DAOGenerico<Municipio> {
     }
 
     public List<Municipio> buscarMunicipiosPorEstado(Estado estado){
-        return listar(Municipio.BUSCAR_MUNICIPIOS_POR_ESTADO, estado.getId());
+        return buscar(Municipio.BUSCAR_MUNICIPIOS_POR_ESTADO, estado.getId());
     }
     
 }
