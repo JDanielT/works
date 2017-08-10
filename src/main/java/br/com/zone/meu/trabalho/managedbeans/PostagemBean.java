@@ -45,9 +45,10 @@ public class PostagemBean extends AbstractBean<Postagem> {
     private Empresa empresa;
 
     //lazylist
-    private int pagina = 0;
-    private long totalRegistros;
-    private final int tamanhoPagina = 3;
+    private Double pagina = 0.0;
+    private Double salto = 0.0;
+    private Double totalRegistros;
+    private final Double tamanhoPagina = 3.0;
 
     public PostagemBean() {
         super(Postagem.class);
@@ -56,7 +57,7 @@ public class PostagemBean extends AbstractBean<Postagem> {
     @PostConstruct
     public void init() {
         this.buscar();
-        this.totalRegistros = postagemDAO.count();
+        this.totalRegistros = postagemDAO.count().doubleValue();
     }
 
     public Empresa getEmpresa() {
@@ -67,26 +68,34 @@ public class PostagemBean extends AbstractBean<Postagem> {
         this.empresa = empresa;
     }
 
-    public int getPagina() {
+    public Double getPagina() {
         return pagina;
     }
 
-    public void setPagina(int pagina) {
+    public void setPagina(Double pagina) {
         this.pagina = pagina;
     }
 
-    public int getTamanhoPagina() {
-        return tamanhoPagina;
+    public Double getSalto() {
+        return salto;
     }
 
-    public long getTotalRegistros() {
+    public void setSalto(Double salto) {
+        this.salto = salto;
+    }
+
+    public Double getTotalRegistros() {
         return totalRegistros;
     }
 
-    public void setTotalRegistros(long totalRegistros) {
+    public void setTotalRegistros(Double totalRegistros) {
         this.totalRegistros = totalRegistros;
     }
-    
+
+    public Double getTamanhoPagina() {
+        return tamanhoPagina;
+    }
+
     @Override
     protected PostagemDAO getDAO() {
         return postagemDAO;
@@ -119,25 +128,31 @@ public class PostagemBean extends AbstractBean<Postagem> {
     }
 
     public void buscar() {
-        itens = getDAO().buscarComLimite(pagina, tamanhoPagina);
+        itens = getDAO().buscarComLimite(salto.intValue(), tamanhoPagina.intValue());
     }
 
     public void proxima() {
-        pagina = pagina + tamanhoPagina;
+        salto = salto + tamanhoPagina;
+        pagina += 1;
         this.buscar();
     }
     
     public boolean isProximoAtivo(){
-        return totalRegistros > tamanhoPagina  || pagina < this.getTotalPaginas();
+        return pagina < (this.getTotalPaginas() - 1);
     }
 
     public void anterior() {
-        pagina = pagina - tamanhoPagina;
+        salto = salto - tamanhoPagina;
+        pagina -= 1;
         this.buscar();
     }
 
     public long getTotalPaginas() {
-        return new BigDecimal(totalRegistros / tamanhoPagina).setScale(0, BigDecimal.ROUND_UP).longValue();
+        long total = new Double(Math.ceil(totalRegistros / tamanhoPagina)).longValue();
+        if(total == 1){
+            total = 0;
+        }
+        return total;
     }
 
     @Override

@@ -90,6 +90,7 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);
         Root<T> root = cq.from(entityClass);
+        cq.orderBy(cb.desc(root.get("id")));
         cq.select(root);
         TypedQuery typedQuery = em.createQuery(cq);
         typedQuery.setFirstResult(paginaAtual);

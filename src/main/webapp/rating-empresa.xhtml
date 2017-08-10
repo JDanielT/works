@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "httph://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+
+            <ui:define name="titulo">Postagem</ui:define>
+
+            <ui:define name="conteudo">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <h1>#{ratingEmpresaBean.empresa.nome}</h1>
+
+                            <div class="rating-block">
+                                <h4>Média de classificação</h4>
+                                <h2 class="bold padding-bottom-7"> #{ratingEmpresaBean.buscarMediaVotos()} <small>/ 5</small></h2>
+
+                                <c:forEach begin="1" end="5" step="1" var="indice" >
+                                    <ui:fragment rendered="#{indice le ratingEmpresaBean.buscarMediaVotos()}">
+                                        <button type="button" disabled="true" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        </button>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{indice gt ratingEmpresaBean.buscarMediaVotos()}">
+                                        <button type="button" disabled="true" class="btn btn-default btn-sm" aria-label="Left Align">
+                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                        </button>
+                                    </ui:fragment>
+                                </c:forEach>
+                            </div>
+                            
+                            <hr/>
+                            
+                             <a href="#{request.contextPath}/home.xhtml" class="btn btn-default pull-right" >voltar</a>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="well">
+                                <h4>Você é o responsável por essa empresa?</h4>
+                                <p>Quer saber mais informações sobre esse resultado? Entre em contato pelo formulário disponível <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
