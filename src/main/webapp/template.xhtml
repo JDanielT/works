@@ -64,6 +64,11 @@
                         $("#empresa").val(ui.item.label);
                         $("#empresaId").val(ui.item.value);
                         return false;
+                    },
+                    focus: function (event, ui) {
+                         $("#empresa").val(ui.item.label);
+                        $("#empresaId").val(ui.item.value);
+                        return false;
                     }
                 });
             });

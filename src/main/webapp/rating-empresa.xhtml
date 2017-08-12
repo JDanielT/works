@@ -21,28 +21,53 @@
                         <div class="col-md-8">
 
                             <h1>#{ratingEmpresaBean.empresa.nome}</h1>
+                            
+                            <p>
+                                <i>
+                                    <h4>
+                                        
+                                        <h:outputText value="Segundo os usuários, esse é um péssimo lugar para se trabalhar"
+                                                      rendered="#{ratingEmpresaBean.buscarMediaVotos() == 1}" />
+                                        
+                                        <h:outputText value="Segundo os usuários, esse é um lugar ruim para se trabalhar"
+                                                      rendered="#{ratingEmpresaBean.buscarMediaVotos() == 2}" />
+                                        
+                                        <h:outputText value="Segundo os usuários, esse é um lugar razoável para se trabalhar"
+                                                      rendered="#{ratingEmpresaBean.buscarMediaVotos() == 3}" />
+                                        
+                                        <h:outputText value="Segundo os usuários, esse é um bom lugar para se trabalhar"
+                                                      rendered="#{ratingEmpresaBean.buscarMediaVotos() == 4}" />
+                                        
+                                        <h:outputText value="Segundo os usuários, esse é um ótimo lugar para se trabalhar"
+                                                      rendered="#{ratingEmpresaBean.buscarMediaVotos() == 5}" />
+                                        
+                                    </h4>
+                                </i>
+                            </p>
+                            
+                            <br/>
 
                             <div class="rating-block">
-                                <h4>Média de classificação</h4>
+                                <h4>Média de classificação nas postagens</h4>
                                 <h2 class="bold padding-bottom-7"> #{ratingEmpresaBean.buscarMediaVotos()} <small>/ 5</small></h2>
 
                                 <c:forEach begin="1" end="5" step="1" var="indice" >
                                     <ui:fragment rendered="#{indice le ratingEmpresaBean.buscarMediaVotos()}">
-                                        <button type="button" disabled="true" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
                                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                         </button>
                                     </ui:fragment>
                                     <ui:fragment rendered="#{indice gt ratingEmpresaBean.buscarMediaVotos()}">
-                                        <button type="button" disabled="true" class="btn btn-default btn-sm" aria-label="Left Align">
+                                        <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
                                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                         </button>
                                     </ui:fragment>
                                 </c:forEach>
                             </div>
-                            
+
                             <hr/>
-                            
-                             <a href="#{request.contextPath}/home.xhtml" class="btn btn-default pull-right" >voltar</a>
+
+                            <a href="#{request.contextPath}/home.xhtml" class="btn btn-default pull-right" >voltar</a>
 
                         </div>
 

@@ -68,12 +68,10 @@
                                         </div>
 
                                     </div>
-
-                                    <ui:fragment rendered="#{!post.anonima}" >
-                                        <p class="lead">
-                                            por <a href="#"><h:outputText value="#{post.usuario.nome}" /></a>
-                                        </p>
-                                    </ui:fragment>
+                                    
+                                    <p class="lead">
+                                        por <i><h:outputText value="#{post.anonima ? 'Anonimo' :  post.usuario.nome}" /></i>
+                                    </p>
 
                                     <p><span class="glyphicon glyphicon-time"></span> 
                                         postado em 
@@ -111,7 +109,7 @@
                                                 <f:ajax render="postagem paginator" />
                                             </h:commandLink>
                                         </li>
-                                        
+
                                         <li class="next">
                                             <h:commandLink action="#{postagemBean.proxima}" 
                                                            disabled="#{!postagemBean.proximoAtivo}" >
@@ -130,7 +128,17 @@
                         <!-- Blog Sidebar Widgets Column -->
                         <div class="col-md-4">
 
-                            <div style="margin-bottom: 3%">
+                            <!-- Side Widget Well -->
+                            <div class="well">
+                                <h4>Como usar essa ferramenta?</h4>
+                                <p>Use esse canal para falar sobre suas experiências de trabalho.
+                                    Fique a vontade, comente sobre pontos positivos ou negativos das empresas.
+                                    Você também pode classificar a empresa em cada postagem que fizer, 
+                                    isso será apresentado na pagina de reputação dela.
+                                </p>
+                            </div>
+
+                            <div style="margin-bottom: 4%">
 
                                 <a href="pages/postagens/postagem.xhtml"
                                    class="btn btn-primary"
@@ -144,6 +152,8 @@
                                 <h4>Buscar por empresas</h4>
 
                                 <h:form id="formBusca" prependId="false">
+
+                                    <p:defaultCommand target="btnSearch" />
 
                                     <div class="input-group">
 
@@ -216,12 +226,6 @@
                                     <!-- /.col-lg-6 -->
                                 </div>
                                 <!-- /.row -->
-                            </div>
-
-                            <!-- Side Widget Well -->
-                            <div class="well">
-                                <h4>Side Widget Well</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
                             </div>
 
                         </div>
