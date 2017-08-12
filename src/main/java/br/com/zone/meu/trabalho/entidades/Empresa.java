@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,8 +17,28 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "empresas")
+@NamedNativeQueries({
+    @NamedNativeQuery(name = Empresa.BUCAR_MELHORES_EMPRESAS, 
+                      query = "SELECT e.id, e.nome as empresa, AVG(v.valor) as reputacao "
+                            + "FROM empresas e " 
+                            + "JOIN votos v ON v.empresa_id = e.id "
+                            + "GROUP BY e.id, empresa "
+                            + "HAVING AVG(v.valor) >= 3 "
+                            + "ORDER BY reputacao DESC", resultClass = EmpresaReputacao.class),
+    
+    @NamedNativeQuery(name = Empresa.BUCAR_PIORES_EMPRESAS, 
+                      query = "SELECT e.id, e.nome as empresa, AVG(v.valor) as reputacao "
+                            + "FROM empresas e " 
+                            + "JOIN votos v ON v.empresa_id = e.id "
+                            + "GROUP BY e.id, empresa "
+                            + "HAVING AVG(v.valor) < 3 "
+                            + "ORDER BY reputacao DESC", resultClass = EmpresaReputacao.class)
+})
 public class Empresa implements BaseEntity {
 
+    public static final String BUCAR_MELHORES_EMPRESAS = "Empresa.buscarMelhoresEmpresas";
+    public static final String BUCAR_PIORES_EMPRESAS = "Empresa.buscarPioresEmpresas";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

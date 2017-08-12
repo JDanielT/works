@@ -9,7 +9,7 @@
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="123456"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>      
-      <property name="hibernate.hbm2ddl.auto" value="update"/>      
+      <!-- <property name="hibernate.hbm2ddl.auto" value="update"/> -->
     </properties>
   </persistence-unit>
 </persistence>

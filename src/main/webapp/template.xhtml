@@ -10,9 +10,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="" />
-        <meta name="author" content=""  />
+        <meta name="author" content="Daniel Tavares"  />
 
+        <link rel="shortcut icon" href="#{request.contextPath}/resources/img/favicon.ico" />
+        
         <title><ui:insert name="titulo" /></title>
 
         <!-- Bootstrap Core CSS -->
@@ -35,8 +36,15 @@
 
         <style>
             body{
-                margin-top: 4.5%;
+                margin-top: 6%;
             }
+
+            .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+                color: #ffffff !important;
+                background-color: #00917d !important;
+                border-color: #027969 !important;
+            }
+
         </style>
 
         <ui:include src="menu.xhtml" />
@@ -66,7 +74,7 @@
                         return false;
                     },
                     focus: function (event, ui) {
-                         $("#empresa").val(ui.item.label);
+                        $("#empresa").val(ui.item.label);
                         $("#empresaId").val(ui.item.value);
                         return false;
                     }

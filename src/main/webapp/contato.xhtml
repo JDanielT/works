@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+
+            <ui:define name="titulo">Contato</ui:define>
+
+            <ui:define name="conteudo">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <h:form class="form-horizontal" 
+                                    role="form"
+                                    prependId="false" >
+
+                                <fieldset>
+
+                                    <legend>Contato</legend>
+
+                                    <h:messages showDetail="true"
+                                                infoClass="alert alert-info"
+                                                warnClass="alert alert-warning"
+                                                errorClass="alert alert-danger" />
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="nome">Nome</label>
+                                        <div class="col-sm-10">
+                                            <h:inputText id="nome"
+                                                         p:type="text" 
+                                                         p:placeholder="seu nome" 
+                                                         class="form-control"
+
+                                                         required="true" 
+                                                         requiredMessage="O campo nome é obrigatório" />
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label" for="email">Email</label>
+                                        <div class="col-sm-10">
+                                            <h:inputText id="email"
+                                                         p:type="email" 
+                                                         p:placeholder="seu e-mail"                                                          
+                                                         class="form-control"
+
+                                                         required="true" 
+                                                         requiredMessage="O campo e-mail é obrigatório" />
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <label class="col-sm-2 control-label" for="mensagem">Mensagem</label>
+                                        <div class="col-sm-10">
+                                            <h:inputTextarea id="mensagem"
+                                                             class="form-control"
+                                                             p:placeholder="sua mensagem"
+                                                             rows="5" 
+                                                             required="true"
+                                                             requiredMessage="O campo texto é obrigatório" />
+                                        </div>
+
+                                    </div>
+
+                                    <hr/>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <div class="pull-right">
+                                                <a href="home.xhtml" class="btn btn-default" >voltar</a>
+                                                <span style="width: 1px" />
+                                                <h:commandButton type="submit" 
+                                                                 class="btn btn-primary"
+                                                                 value="enviar"
+                                                                 action="#{autocadastroBean.salvar()}" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+
+                            </h:form>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <div class="well">
+                                <h4>Nos envie uma mensagem</h4>
+                                <p>Você pode nos enviar uma sugestão, crítica ou tirar 
+                                   qualquer dúvida sobre essa ferramenta pelo formulário abaixo.
+                                   Nós responderemos assim que possível
+                                </p>
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

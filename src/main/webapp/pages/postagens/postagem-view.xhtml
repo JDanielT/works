@@ -44,7 +44,7 @@
                                             <i><h:outputText value="#{postagemBean.entity.anonima ? 'Anonimo' :  postagemBean.entity.usuario.nome}" /></i>
                                         </h4>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" >Avaliação do Autor</label>
                                         <div class="col-sm-10">
@@ -92,11 +92,15 @@
                                     <hr/>
 
                                     <div class="form-group">
-                                        
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <a href="#" style="margin: 5px; font-size: 15px" ><span class="glyphicon glyphicon-thumbs-up" ></span> (0) </a>
-                                            <a href="#" style="color: red; font-size: 15px"><span class="glyphicon glyphicon-thumbs-down" ></span> (0) </a>
-                                        </div>
+
+                                        <ui:fragment rendered="false">
+
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <a href="#" style="margin: 5px; font-size: 15px" ><span class="glyphicon glyphicon-thumbs-up" ></span> (0) </a>
+                                                <a href="#" style="color: red; font-size: 15px"><span class="glyphicon glyphicon-thumbs-down" ></span> (0) </a>
+                                            </div>
+
+                                        </ui:fragment>
                                         <div class="col-sm-offset-2 col-sm-10">
                                             <div class="pull-right">
                                                 <a href="#{request.contextPath}/home.xhtml" class="btn btn-default" >voltar</a>
@@ -118,10 +122,10 @@
                                 <h4>Ei, psiu!</h4>
                                 <p>Quer fazer uma postagem também? Clique <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
                             </div>
-                            
+
                             <div class="well">
                                 <h4>Você é o responsável por essa empresa?</h4>
-                                <p>Gostaria de responder a essa postagem? Entre em contato pelo formulário disponível <a href="#{request.contextPath}/pages/postagens/postagem.xhtml" >aqui</a></p>
+                                <p>Gostaria de responder a essa postagem? Entre em contato pelo formulário disponível <a href="#{request.contextPath}/contato.xhtml" >aqui</a></p>
                             </div>
 
                         </div>

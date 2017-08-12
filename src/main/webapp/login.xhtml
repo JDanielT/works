@@ -9,6 +9,9 @@
         <h:outputStylesheet library="css" name="bootstrap.css" />
         <h:outputStylesheet library="css" name="blog-home.css" />
         <h:outputStylesheet library="css" name="login.css" />
+        
+        <link rel="shortcut icon" href="#{request.contextPath}/resources/img/favicon.ico" />
+        
     </h:head>
     <h:body>
         <div class="container">
@@ -16,26 +19,25 @@
 
                 <div class="main">
 
-                    <h4>Autentique-se, ou <a href="autocadastro.xhtml">cadastre-se</a></h4>
+                    <div style="text-align: center" >
+
+                        <p><h4>Autentique-se, ou <a href="#{request.contextPath}/autocadastro.xhtml">cadastre-se</a></h4></p>
+
+                        <a href="#{request.contextPath}/home.xhtml">
+                        <h:graphicImage name="works.png" 
+                                        library="img"
+                                        alt="WORKS"
+                                        style="width: 130px" />
+                        </a>
+                    </div>
+
+                    <br/>
 
                     <ui:fragment rendered="#{requestScope.mensagem != null}" >
                         <div class="alert alert-info" >
                             #{requestScope.mensagem}
                         </div>
                     </ui:fragment>
-
-                    <div class="row">
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
-                        </div>
-                        <div class="col-xs-6 col-sm-6 col-md-6">
-                            <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
-                        </div>
-                    </div>
-                    <div class="login-or">
-                        <hr class="hr-or" />
-                        <span class="span-or">or</span>
-                    </div>
 
                     <h:form role="form" >
 

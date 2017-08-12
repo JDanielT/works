@@ -180,7 +180,7 @@ public class PostagemBean extends AbstractBean<Postagem> {
     public void limparBusca() {
         empresa = new Empresa();
         super.setItens(null);
-        super.getItens();
+        this.buscar();
     }
 
     @Override

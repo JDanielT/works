@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "httph://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="template.xhtml">
+
+            <ui:define name="titulo">Postagem</ui:define>
+
+            <ui:define name="conteudo">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <h2>Melhores empresas</h2>
+                            <ui:repeat value="#{rankingEmpresaBean.melhoresEmpresas}"
+                                       var="e" >
+
+                                <h3>
+                                    <a href="#{request.contextPath}/rating-empresa.xhtml?id=#{e.id}">
+                                        <h:outputText value="#{e.empresa}" />
+                                    </a>
+                                </h3>
+
+                                <p>
+                                    <i>
+                                        <h4>
+
+                                            <h:outputText value="Segundo os usuários, esse é um lugar razoável para se trabalhar"
+                                                          rendered="#{e.reputacao == 3}" />
+
+                                            <h:outputText value="Segundo os usuários, esse é um bom lugar para se trabalhar"
+                                                          rendered="#{e.reputacao == 4}" />
+
+                                            <h:outputText value="Segundo os usuários, esse é um ótimo lugar para se trabalhar"
+                                                          rendered="#{e.reputacao == 5}" />
+
+                                        </h4>
+                                    </i>
+                                </p>
+
+                                <br/>
+
+                                <div class="rating-block">
+                                    <h4>Média de classificação nas postagens</h4>
+                                    <h2 class="bold padding-bottom-7"> #{e.reputacao} <small>/ 5</small></h2>
+
+                                    <c:forEach begin="1" end="5" step="1" var="indice" >
+                                        <ui:fragment rendered="#{indice le e.reputacao}">
+                                            <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                            </button>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{indice gt e.reputacao}">
+                                            <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                            </button>
+                                        </ui:fragment>
+                                    </c:forEach>
+                                </div>
+                                
+                                <hr/>
+
+                            </ui:repeat>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h2>Piores empresas</h2>
+                            <ui:repeat value="#{rankingEmpresaBean.pioresEmpresas}"
+                                       var="e" >
+
+                                <h3>
+                                    <a href="#{request.contextPath}/rating-empresa.xhtml?id=#{e.id}">
+                                        <h:outputText value="#{e.empresa}" />
+                                    </a>
+                                </h3>
+
+                                <p>
+                                    <i>
+                                        <h4>
+
+                                            <h:outputText value="Segundo os usuários, esse é um péssimo lugar para se trabalhar"
+                                                          rendered="#{e.reputacao == 1}" />
+
+                                            <h:outputText value="Segundo os usuários, esse é um lugar ruim para se trabalhar"
+                                                          rendered="#{e.reputacao == 2}" />
+
+                                        </h4>
+                                    </i>
+                                </p>
+
+                                <br/>
+
+                                <div class="rating-block">
+                                    <h4>Média de classificação nas postagens</h4>
+                                    <h2 class="bold padding-bottom-7"> #{e.reputacao} <small>/ 5</small></h2>
+
+                                    <c:forEach begin="1" end="5" step="1" var="indice" >
+                                        <ui:fragment rendered="#{indice le e.reputacao}">
+                                            <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                            </button>
+                                        </ui:fragment>
+                                        <ui:fragment rendered="#{indice gt e.reputacao}">
+                                            <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
+                                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                            </button>
+                                        </ui:fragment>
+                                    </c:forEach>
+                                </div>
+
+                                <hr/>
+                                
+                            </ui:repeat>
+                            
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

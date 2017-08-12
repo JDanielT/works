@@ -17,5 +17,9 @@ public class PostagemDAO extends DAOGenerico<Postagem> {
     public List<Postagem> buscarPostagensPorEmpresa(Empresa empresa){
         return buscar(Postagem.BUSCAR_POSTAGENS_POR_EMPRESA, empresa.getId());
     }
+    
+    public List<Postagem> buscarUltimasPostagensPorEmpresa(Empresa empresa){
+        return buscarComLimite(0, 3, Postagem.BUSCAR_POSTAGENS_POR_EMPRESA, empresa.getId());
+    }
 
 }

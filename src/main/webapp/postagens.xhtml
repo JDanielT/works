@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <ui:repeat value="#{postagemBean.itens}"
+                   var="post" >
+
+            <div class="row">
+
+                <div class="col-lg-7" >
+
+                    <h3>
+                        <a href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">
+                            <h:outputText value="#{post.titulo}" />
+                        </a>
+                    </h3>
+
+                </div>
+
+                <div class="col-lg-3 pull-right">
+                    Avaliação do autor 
+                    <p:rating value="#{post.voto.valor}" readonly="true" />
+                </div>
+
+                <div class="col-lg-4"
+                     style="text-align: right">
+                    <br/>
+                    <ui:fragment rendered="#{post.usuario.id == acessoBean.usuarioLogado.id}" >
+                        <a href="#{request.contextPath}/pages/postagens/postagem.xhtml?id=#{post.id}" class="btn btn-warning">                                            
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </a>
+                    </ui:fragment>
+                </div>
+
+            </div>
+
+            <ui:fragment rendered="#{!post.anonima}" >
+                <p class="lead">
+                    por <h:outputText value="#{post.usuario.nome}" />
+                </p>
+            </ui:fragment>
+
+            <p><span class="glyphicon glyphicon-time"></span> 
+                postado em 
+                <h:outputText value="#{post.dataPostagem}" >
+                    <f:converter converterId="localDateFacesConverter" />
+                </h:outputText>
+            </p>
+
+            <p class="lead">
+                sobre <a href="#{request.contextPath}/rating-empresa.xhtml?id=#{post.empresa.id}"><h:outputText value="#{post.empresa.nome}" /></a>
+            </p>
+
+            <hr/>
+            <p><h:outputText value="#{post.texto.substring(0, 99)}..." /></p>
+            <a class="btn btn-primary" 
+               href="#{request.contextPath}/pages/postagens/postagem-view.xhtml?id=#{post.id}">Ler mais <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+            <hr/>
+
+        </ui:repeat>
+    </ui:composition> 
+</html>

@@ -31,6 +31,10 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         this.entityClass = entityClass;
     }
 
+    public EntityManager getEntityManager() {
+        return em;
+    }
+    
     @Transacional
     public void salvar(T t) {
         if (t.getId() == null) {
@@ -96,6 +100,16 @@ public class DAOGenerico<T extends BaseEntity> implements Serializable {
         typedQuery.setFirstResult(paginaAtual);
         typedQuery.setMaxResults(tamanhoPagina);
         return typedQuery.getResultList();
+    }
+    
+    protected List<T> buscarComLimite(int paginaAtual, int tamanhoPagina, String namedQuery, Object... params) {
+        Query q = em.createNamedQuery(namedQuery);
+        q.setFirstResult(paginaAtual);
+        q.setMaxResults(tamanhoPagina);
+        for (int i = 0; i < params.length; i++) {
+            q.setParameter(i + 1, params[i]);
+        }
+        return q.getResultList();
     }
 
     public Long count() {
