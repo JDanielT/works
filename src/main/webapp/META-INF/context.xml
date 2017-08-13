@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context path="/meu-trabalho">
-    <Realm appName="meu-trabalho" 
-           className="org.apache.catalina.realm.JAASRealm" 
-           roleClassNames="br.com.zone.meu.trabalho.auth.RolePrincipal" 
-           userClassNames="br.com.zone.meu.trabalho.auth.UserPrincipal" />
+<Context path="/works">
+  <Realm appName="meu-trabalho" className="org.apache.catalina.realm.JAASRealm" roleClassNames="br.com.zone.meu.trabalho.auth.RolePrincipal" userClassNames="br.com.zone.meu.trabalho.auth.UserPrincipal"/>
 </Context>
