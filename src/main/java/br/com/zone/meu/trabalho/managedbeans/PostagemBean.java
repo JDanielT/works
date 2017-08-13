@@ -9,7 +9,6 @@ import br.com.zone.meu.trabalho.entidades.Voto;
 import br.com.zone.meu.trabalho.util.JSFUtil;
 import br.com.zone.meu.trabalho.util.MensagemUtil;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -32,10 +32,10 @@
 
                                     <legend><h:outputText value="#{postagemBean.entity.titulo}" /></legend>
 
-                                    <h:messages infoClass="alert alert-info"
+                                    <h:messages styleClass="no-style-list"
+                                                infoClass="alert alert-info"
                                                 warnClass="alert alert-warning"
-                                                errorClass="alert alert-danger"
-                                                style="padding: 0; list-style-type: none;" />
+                                                errorClass="alert alert-danger" />
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label" for="empresa">Empresa</label>
@@ -162,16 +162,16 @@
                             </div>
 
                             <h:panelGroup id="lembreteRespeitoso" >
-                                
+
                                 <ui:fragment rendered="#{postagemBean.entity.tipo ==  'NEGATIVO'}"  >
-                                
+
                                     <div class="well">
                                         <h4>Um lembrete</h4>
                                         <p>Mesmo que você tenha passado por uma experiência ruim com essa empresa escreva com respeito para evitar que sua postagem seja retirada</p>
                                     </div>
 
                                 </ui:fragment>
-                                
+
                             </h:panelGroup>
 
                         </div>

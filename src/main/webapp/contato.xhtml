@@ -6,6 +6,9 @@
       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+        <f:metadata>
+            <f:viewAction action="#{mensagemBean.preCadastro()}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <ui:composition template="template.xhtml">
@@ -28,7 +31,7 @@
 
                                     <legend>Contato</legend>
 
-                                    <h:messages showDetail="true"
+                                    <h:messages styleClass="no-style-list"
                                                 infoClass="alert alert-info"
                                                 warnClass="alert alert-warning"
                                                 errorClass="alert alert-danger" />
@@ -40,7 +43,7 @@
                                                          p:type="text" 
                                                          p:placeholder="seu nome" 
                                                          class="form-control"
-
+                                                         value="#{mensagemBean.entity.nome}"
                                                          required="true" 
                                                          requiredMessage="O campo nome é obrigatório" />
                                         </div>
@@ -54,7 +57,7 @@
                                                          p:type="email" 
                                                          p:placeholder="seu e-mail"                                                          
                                                          class="form-control"
-
+                                                         value="#{mensagemBean.entity.email}"
                                                          required="true" 
                                                          requiredMessage="O campo e-mail é obrigatório" />
                                         </div>
@@ -70,7 +73,8 @@
                                                              p:placeholder="sua mensagem"
                                                              rows="5" 
                                                              required="true"
-                                                             requiredMessage="O campo texto é obrigatório" />
+                                                             requiredMessage="O campo texto é obrigatório"
+                                                             value="#{mensagemBean.entity.texto}"/>
                                         </div>
 
                                     </div>
@@ -85,7 +89,7 @@
                                                 <h:commandButton type="submit" 
                                                                  class="btn btn-primary"
                                                                  value="enviar"
-                                                                 action="#{autocadastroBean.salvar()}" />
+                                                                 action="#{mensagemBean.salvar()}" />
                                             </div>
                                         </div>
                                     </div>

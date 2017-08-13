@@ -17,7 +17,7 @@ public class AuthConnectionFactory {
     
     public static final String DRIVER = "org.postgresql.Driver";
     public static final String USUARIO = "postgres";
-    public static final String URL = "jdbc:postgresql://localhost:5432/meu-trabalho";
+    public static final String URL = "jdbc:postgresql://localhost:5432/works";
     public static final String SENHA = "123456";
     
     private AuthConnectionFactory() throws IOException, SQLException, PropertyVetoException {
@@ -30,8 +30,8 @@ public class AuthConnectionFactory {
 
         cpds.setMinPoolSize(3);
         cpds.setAcquireIncrement(5);
-        cpds.setMaxPoolSize(20);
-        cpds.setMaxStatements(150);
+        cpds.setMaxPoolSize(5);
+        cpds.setMaxStatements(50);
 
     }
     
